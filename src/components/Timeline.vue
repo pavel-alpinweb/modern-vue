@@ -46,7 +46,7 @@ const posts = computed<TimelinePost[]>(() => {
 </script>
 
 <template>
-  {{ postsStore.getState().foo }}
+  {{ postsStore.foo }}
   <button @click="postsStore.updateFoo('bar')">Update store</button>
   <nav class="is-primary panel timeline">
     <span class="panel-tabs">
@@ -62,7 +62,7 @@ const posts = computed<TimelinePost[]>(() => {
     </span>
     <TimelineItem
         v-for="post in posts"
-        :key="period"
+        :key="post.id"
         :post="post"
     >
     </TimelineItem>
