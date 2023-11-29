@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { Post, today, thisWeek, thisMonth } from "../posts.ts";
+import { ref, computed } from "vue";
+import { TimelinePost, today, thisWeek, thisMonth } from "../posts.ts";
 import {DateTime} from "luxon";
+import TimelineItem from "./TimelineItem.vue";
 
 const periods = ["Today", "This Week", "This Month"] as const;
 
@@ -13,15 +14,31 @@ function selectPeriod (period: Period) {
   selectedPeriod.value = period;
 }
 
-const posts =[
+const posts = computed<TimelinePost[]>(() => {
+  return [
     today,
     thisWeek,
     thisMonth,
-].map(post => {
-  return {
-    ...post,
-    created: DateTime.fromISO(post.created)
-  };
+  ].map(post => {
+    return {
+      ...post,
+      created: DateTime.fromISO(post.created)
+    };
+  }).filter(post => {
+    if (selectedPeriod.value === "Today") {
+      return post.created >= DateTime.now().minus({ day: 1 });
+    }
+
+    if (selectedPeriod.value === "This Week") {
+      return post.created >= DateTime.now().minus({ week: 1 });
+    }
+
+    if (selectedPeriod.value === "This Month") {
+      return post.created >= DateTime.now().minus({ week: 4 });
+    }
+
+    return post;
+  });
 });
 </script>
 
@@ -38,11 +55,12 @@ const posts =[
         {{ period }}
       </a>
     </span>
-
-    <a v-for="post of posts" :key="post.id" class="panel-block">
-      <a>{{ post.title }}</a>
-      <div>{{ post.created.toFormat("d MMM") }}</div>
-    </a>
+    <TimelineItem
+        v-for="post in posts"
+        :key="period"
+        :post="post"
+    >
+    </TimelineItem>
   </nav>
 </template>
 
