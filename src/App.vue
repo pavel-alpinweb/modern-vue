@@ -5,14 +5,7 @@ import Timeline from "./components/Timeline.vue";
 <template>
   <div class="section">
     <div class="container">
-      <suspense>
-        <template #default>
-          <Timeline/>
-        </template>
-        <template #fallback>
-          <progress class="progress is-primary is-small"/>
-        </template>
-      </suspense>
+      <router-view/>
     </div>
   </div>
 </template>
