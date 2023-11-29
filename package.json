@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "npx ts-node-esm src/server/index.ts",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
@@ -15,6 +16,7 @@
     "cors": "2.8",
     "express": "4.17",
     "luxon": "^2.3.1",
+    "npx": "^10.2.2",
     "pinia": "^2.1.7",
     "ts-node": "^10.9.1",
     "vue": "^3.3.8"
