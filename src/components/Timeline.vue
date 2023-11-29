@@ -4,6 +4,8 @@ import {usePosts} from "../stores/posts.ts";
 import {periods} from "../constants.ts";
 
 const postsStore = usePosts();
+
+await postsStore.fetchPosts();
 </script>
 
 <template>
