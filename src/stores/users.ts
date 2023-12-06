@@ -1,6 +1,5 @@
 import {defineStore} from "pinia";
 import {NewUser} from "../users.ts";
-import {useRouter} from "vue-router";
 
 interface UsersState {
     currentUserId?: string;

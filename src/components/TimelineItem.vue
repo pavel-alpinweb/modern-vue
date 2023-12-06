@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {TimelinePost} from "../posts.ts";
 
-const props = defineProps<{
+defineProps<{
   post: TimelinePost
 }>()
 </script>

@@ -5,6 +5,7 @@ import {DateTime} from "luxon";
 import {useUsers} from "../stores/users.ts";
 import {usePosts} from "../stores/posts.ts";
 import {useRouter} from "vue-router";
+import {Post} from "../posts.ts";
 
 const usersStore = useUsers();
 const postsStore = usePosts();

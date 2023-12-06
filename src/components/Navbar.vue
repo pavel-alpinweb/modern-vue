@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {useModal} from '../composables/modal';
-import SignupForm from "./UserForm.vue";
 import {useUsers} from "../stores/users.ts";
 import {useRouter} from "vue-router";
 

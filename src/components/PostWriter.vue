@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import {Post, TimelinePost} from "../posts.ts";
-import {useRouter} from "vue-router";
 import {ref, onMounted, watch} from "vue";
 import {marked} from "marked";
 import highlightjs from "highlight.js";
 import debounce from "lodash/debounce";
-import {usePosts} from "../stores/posts.ts";
 import {useUsers} from "../stores/users.ts";
 
 const props = defineProps<{
@@ -24,13 +22,13 @@ const contentEditable = ref<HTMLDivElement>();
 const usersStore = useUsers();
 
 function parseHtml(markdown: string) {
-  marked.parse(content.value, {
+  marked.parse(markdown, {
     gfm: true,
     breaks: true,
     highlight: code => {
       return highlightjs.highlightAuto(code).value;
     },
-  }, (err, parseResult) => {
+  }, (__, parseResult) => {
     html.value = parseResult;
   });
 }

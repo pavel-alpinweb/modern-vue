@@ -3,8 +3,6 @@ import {computed, ref} from "vue";
 import {length, required, Status, validate} from "../validation.ts";
 import FormInput from "./FormInput.vue";
 import {NewUser} from "../users.ts";
-import {useUsers} from "../stores/users.ts";
-import {useModal} from "../composables/modal.ts";
 
 const username = ref('');
 const usernameStatus = computed(() => {
@@ -19,10 +17,6 @@ const passwordStatus = computed<Status>(() => {
 const isInvalid = computed(() => {
   return !usernameStatus.value.valid || !passwordStatus.value.valid;
 });
-
-const usersStore = useUsers();
-
-const modal = useModal();
 
 defineProps<{
   error?: string;
@@ -52,7 +46,7 @@ async function handleSubmit() {
   <form class="form" @submit.prevent="handleSubmit">
     <FormInput name="Username" v-model="username" :status="usernameStatus" type="text"/>
     <FormInput name="Password" v-model="password" :status="passwordStatus" type="password"/>
-    <div v-if="error?.length > 0 && error" class="is-danger help">
+    <div v-if="error" class="is-danger help">
       {{ error }}
     </div>
     <button class="button" :disabled="isInvalid">Submit</button>

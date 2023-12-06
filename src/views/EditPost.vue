@@ -9,7 +9,7 @@ const router = useRouter();
 const postsStore = usePosts();
 
 const id = route.params.id as string;
-const post: Post = postsStore.all.get(id);
+const post: Post | undefined = postsStore.all.get(id);
 
 if (!post) {
   throw Error(`Post with id ${id} was not found`);
