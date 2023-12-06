@@ -2,6 +2,7 @@
 import Navbar from "./components/Navbar.vue";
 import {useModal} from './composables/modal';
 import {computed} from "vue";
+import {useUsers} from "./stores/users.ts";
 
 const modal = useModal();
 const modalStyle = computed(() => {
@@ -9,11 +10,14 @@ const modalStyle = computed(() => {
     display: modal.show.value ? 'block' : 'none',
   };
 });
+
+const usersStore = useUsers();
+usersStore.authenticate();
 </script>
 
 <template>
   <div class="modal" style="color: white;" :style="modalStyle">
-    <div class="modal-background">
+    <div class="modal-background" @click.self="modal.hideModal()">
       <div class="modal-content">
         <div id="modal"></div>
       </div>

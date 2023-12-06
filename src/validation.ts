@@ -36,7 +36,3 @@ export function validate(value: string, rules: Rule[]): Status {
         valid: true,
     };
 }
-
-console.log(
-    validate('username', [length({min: 5, max: 10})]),
-);

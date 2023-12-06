@@ -9,13 +9,15 @@ const userStore = useUsers();
 const modal = useModal();
 
 async function handleSignUp(newUser: NewUser) {
-  await userStore.createUser(newUser);
-  modal.hideModal();
+  const res = await userStore.login(newUser);
+  if (res) {
+    modal.hideModal();
+  }
 }
 </script>
 
 <template>
-  <UserForm @submit="handleSignUp"/>
+  <UserForm @submit="handleSignUp" :error="userStore.error"/>
 </template>
 
 <style scoped>

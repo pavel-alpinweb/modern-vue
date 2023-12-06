@@ -1,22 +1,28 @@
 <script setup lang="ts">
 import {useModal} from '../composables/modal';
-import SignupForm from "./SignupForm.vue";
+import SignupForm from "./UserForm.vue";
+import {useUsers} from "../stores/users.ts";
 
 const modal = useModal();
+const usersStore = useUsers();
 </script>
 
 <template>
   <div class="navbar">
     <div class="navbar-end">
-      <div class="buttons">
-        <button class="button" @click="modal.showModal()">Sign in</button>
+      <div v-if="usersStore.currentUserId" class="buttons">
+        <button class="button" @click="usersStore.logout()">Sign Out</button>
         <RouterLink to="/posts/new" class="button">New Post</RouterLink>
+      </div>
+      <div v-else class="buttons">
+        <button class="button" @click="modal.showModal('signUp')">Sign Up</button>
+        <button class="button" @click="modal.showModal('signIn')">Sign In</button>
       </div>
     </div>
   </div>
 
   <Teleport to="#modal">
-    <SignupForm/>
+    <component :is="modal.component.value"/>
   </Teleport>
 </template>
 

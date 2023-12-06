@@ -1,17 +1,13 @@
 import {defineStore} from "pinia";
-import {Post, today, thisWeek, thisMonth, TimelinePost} from "../posts.ts";
+import {Post, TimelinePost} from "../posts.ts";
 import {Period} from "../constants.ts";
-import {computed} from "vue";
 import {DateTime} from "luxon";
+import {delay} from "../helpers.ts"
 
 interface PostsState {
     ids: string[]; // ["1", "2"]
     all: Map<string, Post>;
     selectedPeriod: Period;
-}
-
-function delay() {
-    return new Promise<void>(res => setTimeout(res, 1500));
 }
 
 export const usePosts = defineStore("posts", {
@@ -27,7 +23,7 @@ export const usePosts = defineStore("posts", {
         },
 
         async fetchPosts() {
-            const res = await window.fetch("http://localhost:8000/posts");
+            const res = await window.fetch("/api/posts");
             const data = (await res.json()) as Post[];
 
             const ids: string[] = [];
@@ -46,7 +42,7 @@ export const usePosts = defineStore("posts", {
 
         async createPost(post: TimelinePost) {
             const body = JSON.stringify({...post, created: post.created.toISO()});
-            return await window.fetch("http://localhost:8000/posts", {
+            return await window.fetch("/api/posts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
