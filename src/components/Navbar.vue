@@ -2,16 +2,25 @@
 import {useModal} from '../composables/modal';
 import SignupForm from "./UserForm.vue";
 import {useUsers} from "../stores/users.ts";
+import {useRouter} from "vue-router";
 
 const modal = useModal();
 const usersStore = useUsers();
+
+
+const router = useRouter();
+
+async function logout() {
+  await usersStore.logout();
+  await router.push({path: '/'});
+}
 </script>
 
 <template>
   <div class="navbar">
     <div class="navbar-end">
       <div v-if="usersStore.currentUserId" class="buttons">
-        <button class="button" @click="usersStore.logout()">Sign Out</button>
+        <button class="button" @click="logout">Sign Out</button>
         <RouterLink to="/posts/new" class="button">New Post</RouterLink>
       </div>
       <div v-else class="buttons">

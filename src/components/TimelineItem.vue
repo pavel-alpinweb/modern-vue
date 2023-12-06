@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TimelinePost } from "../posts.ts";
+import {TimelinePost} from "../posts.ts";
 
 const props = defineProps<{
   post: TimelinePost
@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <a class="
+  <RouterLink :to="`/posts/${post.id}`" class="
     panel-block
     is-flex
     is-flex-direction-column
@@ -15,7 +15,7 @@ const props = defineProps<{
 ">
     <a>{{ post.title }}</a>
     <div>{{ post.created.toFormat("d MMM") }}</div>
-  </a>
+  </RouterLink>
 </template>
 
 <style scoped>

@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import {TimelinePost} from "../posts.ts";
+import {Post, TimelinePost} from "../posts.ts";
 import {useRouter} from "vue-router";
 import {ref, onMounted, watch} from "vue";
 import {marked} from "marked";
 import highlightjs from "highlight.js";
 import debounce from "lodash/debounce";
 import {usePosts} from "../stores/posts.ts";
+import {useUsers} from "../stores/users.ts";
 
 const props = defineProps<{
-  post: TimelinePost
+  post: TimelinePost | Post
+}>();
+
+const emit = defineEmits<{
+  (event: "submit", post: Post): void;
 }>();
 
 const title = ref(props.post.title);
@@ -16,8 +21,7 @@ const content = ref(props.post.markdown);
 const html = ref('');
 const contentEditable = ref<HTMLDivElement>();
 
-const posts = usePosts();
-const router = useRouter();
+const usersStore = useUsers();
 
 function parseHtml(markdown: string) {
   marked.parse(content.value, {
@@ -38,14 +42,19 @@ watch(content, debounce(() => {
 });
 
 async function handleClick() {
-  const newPost: TimelinePost = {
+  if (!usersStore.currentUserId) {
+    throw Error(`User was not found`);
+  }
+
+  const newPost: Post = {
     ...props.post,
+    created: typeof props.post.created === 'string' ? props.post.created : props.post.created.toISO(),
     title: title.value,
+    authorId: usersStore.currentUserId,
     markdown: content.value,
     html: html.value,
   };
-  await posts.createPost(newPost);
-  router.push("/");
+  emit('submit', newPost);
 }
 
 function handleInput() {
