@@ -4,12 +4,11 @@ import UserForm from "./UserForm.vue";
 import {createPinia, setActivePinia} from "pinia";
 import {createMemoryHistory, createRouter} from "vue-router";
 import {routes} from "../router.ts";
-import {useUsers} from "../stores/users.ts";
 
 vi.stubGlobal('fetch', vi.fn(() => {
 }));
 
-describe("Navbar", () => {
+describe("UserForm", () => {
     let pinia: Pinia;
     let router: Router;
 

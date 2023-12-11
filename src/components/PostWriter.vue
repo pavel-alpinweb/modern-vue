@@ -82,7 +82,7 @@ onMounted(() => {
 
   <div class="columns">
     <div class="column">
-      <div contenteditable ref="contentEditable" @input="handleInput"/>
+      <div contenteditable id="contenteditable" ref="contentEditable" @input="handleInput"/>
     </div>
     <div class="column" v-html="html"/>
   </div>
@@ -90,6 +90,7 @@ onMounted(() => {
   <div class="columns">
     <div class="column">
       <button
+          id="submit"
           class="button is-primary is-pulled-right"
           @click="handleClick"
       >
