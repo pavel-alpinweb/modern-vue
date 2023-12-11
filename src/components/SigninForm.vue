@@ -17,7 +17,7 @@ async function handleSignUp(newUser: NewUser) {
 </script>
 
 <template>
-  <UserForm @submit="handleSignUp" :error="userStore.error"/>
+  <UserForm id="signin-form" @submit="handleSignUp" :error="userStore.error"/>
 </template>
 
 <style scoped>

@@ -19,7 +19,7 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-  <div class="field">
+  <div class="field" :data-testid="name">
     <label :for="name" class="label">{{ name }}</label>
     <div class="control">
       <input :id="name" class="input" :value="modelValue" :type="type" @input="handleInput"/>
